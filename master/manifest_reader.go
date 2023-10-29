@@ -44,3 +44,13 @@ func readManifest(path string) map[int]string {
 	}
 	return config
 }
+
+// read all characters from a json file
+func readJSON(path string) string {
+	buf, err := os.ReadFile(path)
+	if err != nil {
+		return ""
+	}
+
+	return string(buf)
+}

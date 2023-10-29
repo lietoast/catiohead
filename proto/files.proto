@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option go_package = "./pb";
+
+// clients request master for metadata of certain file
+
+message FileRequest {
+    
+}
+
+message FileResponse {
+
+}
