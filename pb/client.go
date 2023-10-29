@@ -15,3 +15,8 @@ func InsecureConnect(address string, port int) (*grpc.ClientConn, error) {
 	}
 	return conn, nil
 }
+
+func Connect(address string, port int) (*grpc.ClientConn, error) {
+	// TODO: implement secure connection
+	return InsecureConnect(address, port)
+}

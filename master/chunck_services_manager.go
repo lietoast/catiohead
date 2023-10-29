@@ -137,7 +137,7 @@ func checkChunckServiceStatus(id int) {
 		if service.conn == nil {
 			service.connMtx.Lock()
 			if service.conn == nil {
-				conn, err := pb.InsecureConnect(service.address, service.port)
+				conn, err := pb.Connect(service.address, service.port)
 				if err != nil {
 					service.conn = nil
 					service.setStatus(DEAD)

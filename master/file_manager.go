@@ -2,7 +2,6 @@ package master
 
 import (
 	"encoding/json"
-	"strings"
 	"sync"
 
 	"github.com/tidwall/btree"
@@ -17,19 +16,13 @@ type FileMetadata struct {
 	Chuncks    map[int]ChunckMetadata `json:"chuncks"`    // index -> chunck
 }
 
-// comparFileMetadata is a comparison function that compares filenames and returns true
-// when f's Filename is less than g's Filename
-func comparFileMetadata(f, g FileMetadata) bool {
-	return strings.Compare(f.Filename, g.Filename) < 0
-}
-
 type ChunckMetadata struct {
 	Mtx      *sync.RWMutex
 	Primary  int   `json:"primary"`  // server id of primary chunckserver
 	Replicas []int `json:"replicas"` // set of replica locations
 }
 
-var fileTree *btree.BTreeG[FileMetadata]
+var fileTree btree.Map[string, FileMetadata]
 
 func init() {
 	fileJson := readJSON(metadataFilePath)
@@ -39,9 +32,7 @@ func init() {
 		panic(err)
 	}
 
-	fileTree = btree.NewBTreeG[FileMetadata](comparFileMetadata)
-
 	for _, file := range files {
-		fileTree.Set(file)
+		fileTree.Set(file.Filename, file)
 	}
 }

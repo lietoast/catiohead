@@ -1,13 +1,21 @@
 syntax = "proto3";
 
+import "file_handler.proto";
+
 option go_package = "./pb";
 
 // clients request master for metadata of certain file
 
 message FileRequest {
-    
+    string fileName = 1;
+    int32 index = 2; // chunck index
 }
 
 message FileResponse {
+    string filename = 1;
+    ChunckHandler handler = 2;
+}
 
+service FileService {
+    rpc GetChuncks(stream FileRequest) returns (FileResponse);
 }

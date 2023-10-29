@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option go_package = "./pb";
+
+enum Method {
+    CREATE = 0;
+    DELELT = 1;
+    READ = 3;
+    WRITE = 4;
+}
+
+message ChunckHandler {
+    string chunkServiceAddress = 1;
+    Method method = 2;
+    bool permitted = 3;
+}
